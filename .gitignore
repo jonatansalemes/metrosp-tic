@@ -1,0 +1,7 @@
+.tern-project
+.classpath
+.project
+.settings
+.DS_Store
+target
+env.properties
