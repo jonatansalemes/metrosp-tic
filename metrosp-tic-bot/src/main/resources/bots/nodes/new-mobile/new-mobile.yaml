@@ -1,0 +1,7 @@
+id: 'newMobile'
+type: 'node'
+components: 
+   - type : 'text'
+     text : 'Novo celular'
+hasPrevious: true
+previous: 'welcome'

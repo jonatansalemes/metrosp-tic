@@ -1,0 +1,87 @@
+id: 'installNewSoftware'
+type: 'node'
+hasNext: true
+next: 'installNewSoftwareCreateTicket'
+before:
+   -  type: 'http-request'
+      method: 'get'
+      url: 'http://localhost:8081/api/v1/softwares'
+      putOnContextAs: 'softwareResponse'
+components: 
+   - type: 'dialog'
+     of: 'error'
+     text: > 
+               (js) -> return `Houve algum problema ao tentar buscar a lista de softwares`;
+     title: 'Houve algum problema ao tentar buscar a lista de softwares'
+     rendered: > 
+                  (js) -> return context.softwareResponse.statusCode !== 200;
+   -  type: 'form'
+      title: 'Formulário de solicitação para instalação de software'
+      fields:
+         -  type: 'form-field'
+            label: 'Software a instalar'
+            required: true
+            components:
+               - type : 'select'
+                 putOnContextAs : 'createTicketSoftwareInstallSoftwareId'
+                 required: true
+                 placeholder: 'Escolha o software no qual deseja instalar'
+                 map: > 
+                          (js) -> return context.softwareResponse.body.map(software => {
+                                return {
+                                   value: software.id,
+                                   text: software.name + ' ' + software.version
+                                };
+                          });
+         -  type: 'form-field'
+            label: 'Hostname'
+            components:
+               - type : 'input'
+                 of: 'text'
+                 putOnContextAs : 'createTicketSoftwareInstallHostname'
+                 placeholder: 'Preencha o hostname'
+                 value: > 
+                           (js) -> return context.machineDetailResponse.body.hostname;
+         -  type: 'form-field'
+            label: 'Ips'
+            components:
+               - type : 'input'
+                 of: 'text'
+                 putOnContextAs : 'createTicketSoftwareInstallIps'
+                 placeholder: 'Preencha o ip'
+                 value: > 
+                           (js) -> return context.machineDetailResponse.body.interfaces.join(',');
+         -  type: 'form-field'
+            label: 'Confirme o nome completo (troque caso desejar)'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'text'
+                 putOnContextAs : 'createTicketSoftwareInstallFullName'
+                 required: true
+                 placeholder: 'Preencha seu nome completo'
+                 value: > 
+                           (js) -> return context.machineDetailResponse.body.fullName;
+         -  type: 'form-field'
+            label: 'Confirme o telefone para contato (troque caso desejar)'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'phone'
+                 putOnContextAs : 'createTicketSoftwareInstallPhone'
+                 required: true
+                 placeholder: 'Preencha seu telefone completo'
+                 value: > 
+                           (js) -> return context.machineDetailResponse.body.phone;
+         -  type: 'form-field'
+            label: 'Confirme o email para contato (troque caso desejar)'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'email'
+                 putOnContextAs : 'createTicketSoftwareInstallEmail'
+                 required: true
+                 placeholder: 'Preencha seu email completo'
+                 value: > 
+                           (js) -> return context.machineDetailResponse.body.email; 
+    

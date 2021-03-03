@@ -1,0 +1,31 @@
+id: 'welcome'
+type: 'node'
+components:
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Suporte MetroSP TIC'
+      fields:
+      -  type: 'form-field'
+         components:
+         -  type: 'button-group'
+            putOnContextAs: 'flow'
+            text: 'Por favor, escolha uma opção para iniciar o atendimento guiado.'
+            required: true
+            buttons:
+            -  text: 'Queria solicitar um novo dispositivo móvel'
+               value: 'newMobile'
+               type: 'button'
+            -  text: 'Gostaria de descrever um problema e que o robô me guie no processo de atendimento'
+               value: 'newProblem'
+               type: 'button'
+            value: > 
+               (js) => if(context.exists('flow')) {
+                           return context.flow;
+                        } else {
+                           return '';
+                        }
+hasNext: true
+next: (js) -> return context.flow; 
+                       

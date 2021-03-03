@@ -8,14 +8,32 @@ import com.jslsolucoes.metrosp.tic.api.domain.MachineInterface;
 
 public class MachineView {
 
-	private String uuid;
-	private String hostname;
-	private List<String> interfaces;
+	private final String uuid;
+	private final String hostname;
+	private final List<String> interfaces;
+	private final String email;
+	private final String phone;
+	private final String fullName;
 
 	public MachineView(Machine machine) {
 		this.uuid = machine.uuid();
 		this.hostname = machine.hostname();
 		this.interfaces = machine.interfaces().stream().map(MachineInterface::address).collect(Collectors.toList());
+		this.email = machine.userEmail();
+		this.phone = machine.userPhone();
+		this.fullName = machine.userFullName();
+	}
+
+	public String fullName() {
+		return fullName;
+	}
+
+	public String email() {
+		return email;
+	}
+
+	public String phone() {
+		return phone;
 	}
 
 	public String uuid() {

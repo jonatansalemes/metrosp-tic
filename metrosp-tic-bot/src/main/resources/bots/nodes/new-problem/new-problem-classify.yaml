@@ -1,0 +1,34 @@
+id: 'newProblemClassify'
+type: 'node'
+before:
+    - type: 'ml-classifier'
+      classify: >
+                 (js) -> return context.problemDescription;
+      putOnContextAs: 'problemClassification'
+      models:
+         - 'metroSpTicNaiveBayesModel'
+         - 'metroSpTicDeepLearningModel'
+      onDisagree: 'metroSpTicNaiveBayesModel'
+    - type: 'http-request'
+      method: 'get'
+      url: 'http://localhost:8081/api/v1/machines/8a18cbcf-ae06-4bf5-8f2b-e575b98fb87f'
+      putOnContextAs: 'machineDetailResponse'
+components:
+   - type: 'text'
+     text: (js) -> return `Apesar de entender que seu problema pode estar ligado a ${context.problemClassification} ainda não possuimos um fluxo automatizado para esse tipo de problema`;
+     rendered: (js) -> return context.problemClassification !== 'install-software';
+   - type: 'text'
+     text: (js) -> 
+                 return `Olá ${context.machineDetailResponse.body.fullName} aparentemente você quer instalar um novo software em seu computador ${context.machineDetailResponse.body.hostname} (${context.machineDetailResponse.body.interfaces.join(',')}). Caso seja isso mesmo, basta prosseguir clicando em "Próximo". Caso deseje tentar descrever melhor seu problema clique em "Voltar".`;
+     rendered: (js) -> return context.problemClassification === 'install-software' && context.machineDetailResponse.statusCode === 200;
+   - type: 'dialog'
+     of: 'error'
+     text: > 
+               (js) -> return `Houve algum problema ao tentar recuperar os dados de seu equipamento`;
+     title: 'Problema na coleta de dados do equipamento'
+     rendered: > 
+                  (js) -> return context.machineDetailResponse.statusCode !== 200;
+hasPrevious: true
+previous: 'newProblem'
+hasNext: (js) -> return context.problemClassification === 'install-software';
+next: 'installNewSoftware'   

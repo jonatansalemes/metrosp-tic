@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -25,6 +27,10 @@ public class Machine {
 	@Column(nullable = false)
 	private String uuid;
 
+	@ManyToOne
+	@JoinColumn(name = "id_user", nullable = false)
+	private User user;
+
 	@Column(nullable = false)
 	private String hostname;
 
@@ -35,9 +41,10 @@ public class Machine {
 
 	}
 
-	public Machine(String uuid, String hostname) {
+	public Machine(String uuid, String hostname, User user) {
 		this.uuid = uuid;
 		this.hostname = hostname;
+		this.user = user;
 	}
 
 	public Machine setInterfaces(Set<MachineInterface> interfaces) {
@@ -45,21 +52,33 @@ public class Machine {
 		this.interfaces.addAll(interfaces);
 		return this;
 	}
-	
+
 	public Long id() {
 		return id;
 	}
-	
+
 	public String uuid() {
 		return uuid;
 	}
-	
+
 	public String hostname() {
 		return hostname;
 	}
-	
+
 	public Set<MachineInterface> interfaces() {
 		return interfaces;
+	}
+
+	public String userEmail() {
+		return user.email();
+	}
+
+	public String userPhone() {
+		return user.phone();
+	}
+
+	public String userFullName() {
+		return user.fullName();
 	}
 
 }

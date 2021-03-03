@@ -17,8 +17,10 @@ import com.jslsolucoes.metrosp.tic.api.domain.Machine;
 import com.jslsolucoes.metrosp.tic.api.domain.MachineInterface;
 import com.jslsolucoes.metrosp.tic.api.domain.Software;
 import com.jslsolucoes.metrosp.tic.api.domain.SoftwareVersion;
+import com.jslsolucoes.metrosp.tic.api.domain.User;
 import com.jslsolucoes.metrosp.tic.api.repo.MachineRepo;
 import com.jslsolucoes.metrosp.tic.api.repo.SoftwareRepo;
+import com.jslsolucoes.metrosp.tic.api.repo.UserRepo;
 
 @SpringBootApplication
 public class Application {
@@ -28,22 +30,28 @@ public class Application {
 	}
 
 	@Bean
-	public CommandLineRunner loadData(SoftwareRepo softwareRepo, MachineRepo machineRepo) {
+	public CommandLineRunner loadData(SoftwareRepo softwareRepo, MachineRepo machineRepo, UserRepo userRepo) {
 		return (args) -> {
+			User user = user();
+			userRepo.save(user);
 			softwareRepo.saveAll(softwares());
-			machineRepo.saveAll(machines());
+			machineRepo.saveAll(machines(user));
 		};
 	}
 
-	private List<Machine> machines() {
-		return IntStream.range(0, 9).boxed().map(this::machine).collect(Collectors.toList());
+	private User user() {
+		return new User("jonatan@jslsolucoes.com", "(11) 94970-3490", "Jonatan Lemes");
 	}
 
-	private Machine machine(Integer index) {
+	private List<Machine> machines(User user) {
+		return IntStream.range(0, 9).boxed().map(index -> machine(index, user)).collect(Collectors.toList());
+	}
+
+	private Machine machine(Integer index, User user) {
 		String uuid = index == 3 ? UUID.fromString("8a18cbcf-ae06-4bf5-8f2b-e575b98fb87f").toString()
 				: UUID.randomUUID().toString();
 		String hostname = "hostname0" + index;
-		Machine machine = new Machine(uuid, hostname);
+		Machine machine = new Machine(uuid, hostname, user);
 		return machine.setInterfaces(interfacesOf(machine, index));
 	}
 
