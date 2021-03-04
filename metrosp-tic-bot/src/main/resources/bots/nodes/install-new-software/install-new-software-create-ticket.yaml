@@ -1,20 +1,46 @@
 id: 'installNewSoftwareCreateTicket'
 type: 'node'
 before:
+   - type: 'query'
+     provider: 'metroSpTicDbProvider'
+     query: 'insert into metrosptic.ticket (full_name,phone,email,id_software_version,hostname,ip) values (?,?,?,?,?,?)'
+     asUpdate: true
+     putOnContextAs: 'createDbTicketResult'
+     params:
+        - (js) -> return context.createTicketSoftwareInstallFullName;
+        - (js) -> return context.createTicketSoftwareInstallPhone;
+        - (js) -> return context.createTicketSoftwareInstallEmail;
+        - (js) -> return context.createTicketSoftwareInstallIdSoftwareVersion;
+        - (js) -> return context.createTicketSoftwareInstallHostname;
+        - (js) -> return context.createTicketSoftwareInstallIps;
+   - type: 'http-request'
+     url: 'http://localhost:8081/api/v1/tickets'
+     method: 'post'
+     headers:
+        - name: 'Content-Type'
+          value: 'application/json'
+     body:     
+        fullName: (js) -> return context.createTicketSoftwareInstallFullName;
+        phone: (js) => return context.createTicketSoftwareInstallPhone;
+        email: (js) => return context.createTicketSoftwareInstallEmail;
+        idSoftwareVersion: (js) => return context.createTicketSoftwareInstallIdSoftwareVersion;
+        hostname: (js) => return context.createTicketSoftwareInstallHostname;
+        ip: (js) => return context.createTicketSoftwareInstallIps;
+     putOnContextAs: 'createNewAppointmentsResponse'
    - type: 'mail'
      provider: 'metroSpTicMailer'
      subject: (js) => return `Criação de novo ticket para instalação de software`;
-     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solitação para instalação de software foi recebida com sucesso`;
+     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solicitação para instalação de software foi recebida com sucesso`;
      to:
         - (js) => return context.createTicketSoftwareInstallEmail;
    - type: 'sms'
      provider: 'metroSpTicSms'
-     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solitação para instalação de software foi recebida com sucesso.`;
+     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solicitação para instalação de software foi recebida com sucesso.`;
      to:
         - (js) => return '+55' + context.createTicketSoftwareInstallPhone;
    - type: 'wpp'
      provider: 'metroSpTicWpp'
-     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solitação para o procedimento de instalação de software foi recebida com sucesso. Um email e um SMS também foram enviados sobre os dados da solicitação.`;
+     message: (js) -> return `Olá ${context.createTicketSoftwareInstallFullName} sua solicitação para o procedimento de instalação de software foi recebida com sucesso. Um email e um SMS também foram enviados contendo os dados da solicitação.`;
      to:
         - (js) => return '+55' + context.createTicketSoftwareInstallPhone;
 components:

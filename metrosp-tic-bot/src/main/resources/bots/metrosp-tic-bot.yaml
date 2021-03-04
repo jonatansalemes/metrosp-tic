@@ -85,3 +85,9 @@ providers:
         type: 'native-ml-provider'
         url: 'http://localhost:5000'
         apiToken: '12345678'
+   db:
+      - id: 'metroSpTicDbProvider'
+        type: 'pgsql-db-provider'
+        jdbcUrl: 'jdbc:postgresql://localhost:5432/metrosptic'
+        username: (js) -> return env.PGSQL_USERNAME;
+        password: (js) -> return env.PGSQL_PASSWORD;

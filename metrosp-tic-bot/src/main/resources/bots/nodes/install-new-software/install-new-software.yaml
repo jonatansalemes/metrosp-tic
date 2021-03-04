@@ -23,7 +23,7 @@ components:
             required: true
             components:
                - type : 'select'
-                 putOnContextAs : 'createTicketSoftwareInstallSoftwareId'
+                 putOnContextAs : 'createTicketSoftwareInstallIdSoftwareVersion'
                  required: true
                  placeholder: 'Escolha o software no qual deseja instalar'
                  map: > 
@@ -33,6 +33,8 @@ components:
                                    text: software.name + ' ' + software.version
                                 };
                           });
+                 value: > 
+                           (js) -> return context.createTicketSoftwareInstallIdSoftwareVersion;
          -  type: 'form-field'
             label: 'Hostname'
             components:
