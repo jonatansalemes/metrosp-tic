@@ -11,7 +11,7 @@ components:
          components:
          -  type: 'button-group'
             putOnContextAs: 'flow'
-            text: 'Por favor, escolha uma opção para iniciar o atendimento guiado.'
+            text: 'Por favor, escolha uma opção para iniciar o atendimento.'
             required: true
             buttons:
             -  text: 'Queria solicitar um novo dispositivo móvel'

@@ -15,6 +15,9 @@ components:
      title: 'Houve algum problema ao tentar buscar a lista de softwares'
      rendered: > 
                   (js) -> return context.softwareResponse.statusCode !== 200;
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
    -  type: 'form'
       title: 'Formulário de solicitação para instalação de software'
       fields:

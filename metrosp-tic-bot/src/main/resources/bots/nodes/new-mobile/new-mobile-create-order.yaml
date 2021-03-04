@@ -1,0 +1,5 @@
+id: 'newMobileCreateOrder'
+type: 'node'
+components: 
+   -  type: 'text'
+      text: 'Criar solicitacao'

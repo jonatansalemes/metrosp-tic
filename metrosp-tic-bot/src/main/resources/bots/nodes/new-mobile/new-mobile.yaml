@@ -1,7 +1,27 @@
 id: 'newMobile'
 type: 'node'
 components: 
-   - type : 'text'
-     text : 'Novo celular'
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Formulário de solicitação de dispositivo móvel'
+      fields:
+         -  type: 'form-field'
+            label: 'Motive a sua solicitação para um novo dispositivo móvel'
+            required: true
+            components:
+               - type : 'textarea'
+                 putOnContextAs : 'askForNewDeviceReason'
+                 required: true
+                 placeholder: 'Preencha o motivo pelo qual está solicitando um novo dispositivo móvel'
+                 value: > 
+                           (js) -> if(context.exists('askForNewDeviceReason')) {
+                              return context.askForNewDeviceReason;
+                           } else {
+                              return '';
+                           }
 hasPrevious: true
 previous: 'welcome'
+hasNext: true
+next: 'newMobileCreateOrder'
