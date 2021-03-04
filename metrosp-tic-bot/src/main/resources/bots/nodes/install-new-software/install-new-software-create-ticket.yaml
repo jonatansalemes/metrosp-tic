@@ -26,7 +26,7 @@ before:
         idSoftwareVersion: (js) => return context.createTicketSoftwareInstallIdSoftwareVersion;
         hostname: (js) => return context.createTicketSoftwareInstallHostname;
         ip: (js) => return context.createTicketSoftwareInstallIps;
-     putOnContextAs: 'createNewAppointmentsResponse'
+     putOnContextAs: 'createNewTicketResponse'
    - type: 'mail'
      provider: 'metroSpTicMailer'
      subject: (js) => return `Criação de novo ticket para instalação de software`;
@@ -45,4 +45,17 @@ before:
         - (js) => return '+55' + context.createTicketSoftwareInstallPhone;
 components:
   - type: 'text'
-    text: 'Create ticket'
+    text: (js) -> return `${createNewTicketResponse.body.fullName} sua solicitação foi registrada com sucesso. Foram enviados ao seu email ${createNewTicketResponse.body.email} e telefone (sms e whatsapp) ${createNewTicketResponse.body.phone} uma confirmação de recebimento`;
+    rendered: (js) -> return context.createNewTicketResponse.statusCode === 201;
+  - type: 'dialog'
+    of: 'error'
+    text: (js) -> return `Houve algum problema ao tentar criar um ticket com sua solicitação`;
+    title: 'Houve algum problema ao tentar buscar a lista de softwares'
+    rendered: > 
+                  (js) -> return context.createNewTicketResponse.statusCode !== 201;
+    
+    
+    
+    
+    
+    
