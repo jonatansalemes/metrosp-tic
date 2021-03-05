@@ -13,11 +13,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.jslsolucoes.metrosp.tic.api.domain.Department;
 import com.jslsolucoes.metrosp.tic.api.domain.Machine;
 import com.jslsolucoes.metrosp.tic.api.domain.MachineInterface;
 import com.jslsolucoes.metrosp.tic.api.domain.Software;
 import com.jslsolucoes.metrosp.tic.api.domain.SoftwareVersion;
 import com.jslsolucoes.metrosp.tic.api.domain.User;
+import com.jslsolucoes.metrosp.tic.api.repo.DepartmentRepo;
 import com.jslsolucoes.metrosp.tic.api.repo.MachineRepo;
 import com.jslsolucoes.metrosp.tic.api.repo.SoftwareRepo;
 import com.jslsolucoes.metrosp.tic.api.repo.UserRepo;
@@ -30,13 +32,20 @@ public class Application {
 	}
 
 	@Bean
-	public CommandLineRunner loadData(SoftwareRepo softwareRepo, MachineRepo machineRepo, UserRepo userRepo) {
+	public CommandLineRunner loadData(SoftwareRepo softwareRepo, MachineRepo machineRepo, UserRepo userRepo,
+			DepartmentRepo departmentRepo) {
 		return (args) -> {
 			User user = user();
 			userRepo.save(user);
 			softwareRepo.saveAll(softwares());
+			departmentRepo.saveAll(departments());
 			machineRepo.saveAll(machines(user));
 		};
+	}
+
+	private List<Department> departments() {
+		return List.of(new Department("Departamento financeiro"), new Department("Departamento TIC"), new Department("Departamento de Operações"),
+				new Department("Departamento de Recursos Humanos"),new Department("Gabinete Geral"),new Department("Presidência"),new Department("Departamento de Logística"));
 	}
 
 	private User user() {

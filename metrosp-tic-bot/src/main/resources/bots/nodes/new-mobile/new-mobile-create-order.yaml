@@ -1,5 +1,16 @@
 id: 'newMobileCreateOrder'
 type: 'node'
+before:
+   - type: 'http-request'
+     url: 'http://localhost:8081/api/v1/mobile/orders'
+     method: 'post'
+     headers:
+        - name: 'Content-Type'
+          value: 'application/json'
+     body:     
+        idDepartment: (js) -> return context.askForNewDeviceDepartment.value;
+        reason: (js) => return context.askForNewDeviceReason;
+     putOnContextAs: 'newMobileTicketResponse'
 components: 
    -  type: 'text'
-      text: 'Criar solicitacao'
+      text: 'Solicitação de dispositivo móvel foi realizada com sucesso'
