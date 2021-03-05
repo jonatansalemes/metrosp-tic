@@ -8,6 +8,30 @@ components:
       title: 'Formulário de solicitação de dispositivo móvel'
       fields:
          -  type: 'form-field'
+            label: 'Escolha o departamento responsável'
+            required: true
+            components:
+               -  type: 'auto-complete'
+                  text: >
+                              (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.text : '';
+                  value: >
+                              (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.value : '';
+                  required: true
+                  placeholder: 'Digite um termo para pesquisar: Financeiro, Rh, Operações'
+                  putOnContextAs: 'askForNewDeviceDepartment'
+                  url: 'http://localhost:8081/api/v1/departments'
+                  min: 3
+                  debounce: 300
+                  map: >
+                       (response) => {
+                          return response.map((department) => {
+                             return  {
+                                value: department.id,
+                                text: department.name
+                             }
+                          });
+                       }
+         -  type: 'form-field'
             label: 'Motive a sua solicitação para um novo dispositivo móvel'
             required: true
             components:
@@ -20,8 +44,9 @@ components:
                               return context.askForNewDeviceReason;
                            } else {
                               return '';
-                           }
+                           }    
+     
 hasPrevious: true
 previous: 'welcome'
 hasNext: true
-next: 'newMobileCreateOrder'
+next: 'newMobileConfirmOrder'

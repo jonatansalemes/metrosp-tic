@@ -10,6 +10,8 @@ nodes:
      type: 'node'
    - ref: 'new-mobile-create-order.yaml'
      type: 'node'
+   - ref: 'new-mobile-confirm-order.yaml'
+     type: 'node'
    - ref: 'new-problem.yaml'
      type: 'node'
    - ref: 'new-problem-classify.yaml'
