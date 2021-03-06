@@ -21,6 +21,7 @@ RUN sed -i 's/port = 5432/port = 5433/' /etc/postgresql/12/main/postgresql.conf
 #build frontend app
 ARG GIT_USERNAME
 ARG GIT_PASSWORD
+ARG BOT_URL
 COPY app /app
 RUN chmod +x /app/*.sh
 RUN dos2unix /app/*.sh
@@ -28,7 +29,7 @@ RUN git config --global http.sslVerify false
 RUN git clone --depth 1 --single-branch --branch feature-rc4 https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jslsolucoes/open-chatbot.git /opt/open-chatbot
 RUN rm -rf /opt/open-chatbot/app/.env*
 RUN npm install -g serve
-RUN printf "REACT_APP_URL_BASE=https://metrosp-tic-api.jslsolucoes.com/api/v1\nREACT_APP_BOT_ID=bots\nREACT_APP_LOCALE=pt_br\n" > /opt/open-chatbot/app/.env
+RUN printf "REACT_APP_URL_BASE=${BOT_URL}/api/v1\nREACT_APP_BOT_ID=bots\nREACT_APP_LOCALE=pt_br\n" > /opt/open-chatbot/app/.env
 RUN cd /opt/open-chatbot/app && npm install && npm run build
 
 #build engine
@@ -54,6 +55,7 @@ RUN python3 -c 'import nltk; nltk.download("punkt")'
 EXPOSE 5000
 EXPOSE 5001
 EXPOSE 8080
+EXPOSE 8081
 
 #supervisor
 COPY supervisord.conf /etc/supervisord.conf

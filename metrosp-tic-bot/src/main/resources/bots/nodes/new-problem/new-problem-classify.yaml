@@ -19,7 +19,7 @@ components:
      rendered: (js) -> return context.problemClassification !== 'install-software';
    - type: 'text'
      text: (js) -> 
-                 return `Olá ${context.machineDetailResponse.body.fullName} aparentemente você quer instalar um novo software em seu computador ${context.machineDetailResponse.body.hostname} (${context.machineDetailResponse.body.interfaces.join(',')}). Caso seja isso mesmo, basta prosseguir clicando em "Próximo". Caso deseje tentar descrever melhor seu problema clique em "Voltar".`;
+                 return `Olá ${context.machineDetailResponse.body.fullName} aparentemente você quer instalar um novo software em seu computador ${context.machineDetailResponse.body.hostname} (${context.machineDetailResponse.body.interfaces.join(',')}). Caso seja isso mesmo, basta prosseguir clicando em "Próximo". Caso deseje tentar descrever melhor seu problema clique em "Anterior" para voltar.`;
      rendered: (js) -> return context.problemClassification === 'install-software' && context.machineDetailResponse.statusCode === 200;
    - type: 'dialog'
      of: 'error'
