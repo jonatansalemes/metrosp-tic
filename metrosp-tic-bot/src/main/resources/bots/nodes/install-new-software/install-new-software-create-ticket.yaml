@@ -45,7 +45,7 @@ before:
         - (js) => return '+55' + context.createTicketSoftwareInstallPhone;
 components:
   - type: 'text'
-    text: (js) -> return `${createNewTicketResponse.body.fullName} sua solicitação foi registrada com sucesso. Foram enviados ao seu email ${createNewTicketResponse.body.email} e telefone (sms e whatsapp) ${createNewTicketResponse.body.phone} uma confirmação de recebimento`;
+    text: (js) -> return `${context.createNewTicketResponse.body.fullName} sua solicitação foi registrada com sucesso. Foram enviados ao seu email ${context.createNewTicketResponse.body.email} e telefone (sms e whatsapp) ${context.createNewTicketResponse.body.phone} uma confirmação de recebimento`;
     rendered: (js) -> return context.createNewTicketResponse.statusCode === 201;
   - type: 'dialog'
     of: 'error'

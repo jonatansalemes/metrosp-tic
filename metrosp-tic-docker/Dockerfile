@@ -8,10 +8,6 @@ RUN apt-get update --fix-missing
 RUN apt-get install -y nodejs postgresql postgresql-contrib openjdk-8-jdk maven git supervisor npm dos2unix vim telnet python3 python3-pip
 RUN pip3 install --upgrade pip
 
-
-#force rebuild
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-
 #pgsql
 COPY pgsql /pgsql
 RUN chmod +x /pgsql/*.sh
@@ -40,6 +36,11 @@ COPY api /api
 RUN chmod +x /api/*.sh && dos2unix /api/*.sh
 COPY bot /bot
 RUN chmod +x /bot/*.sh && dos2unix /bot/*.sh
+
+
+#force rebuild
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+
 RUN git clone --depth 1 --single-branch --branch main https://github.com/jslsolucoes/metrosp-tic /opt/metrosp-tic
 RUN cd /opt/metrosp-tic && mvn install
 COPY bot/env.properties /opt/metrosp-tic/metrosp-tic-bot/target/env.properties
