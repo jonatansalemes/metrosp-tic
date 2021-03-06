@@ -2,7 +2,8 @@ id: 'newMobileCreateOrder'
 type: 'node'
 before:
    - type: 'http-request'
-     url: 'http://localhost:8081/api/v1/mobile/orders'
+     url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/mobile/orders`
      method: 'post'
      headers:
         - name: 'Content-Type'

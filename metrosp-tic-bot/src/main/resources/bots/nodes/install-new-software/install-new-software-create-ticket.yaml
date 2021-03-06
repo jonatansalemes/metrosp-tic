@@ -14,7 +14,8 @@ before:
         - (js) -> return context.createTicketSoftwareInstallHostname;
         - (js) -> return context.createTicketSoftwareInstallIps;
    - type: 'http-request'
-     url: 'http://localhost:8081/api/v1/tickets'
+     url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/tickets`
      method: 'post'
      headers:
         - name: 'Content-Type'

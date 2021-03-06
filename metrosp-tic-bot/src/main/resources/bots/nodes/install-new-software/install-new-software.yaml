@@ -5,7 +5,8 @@ next: 'installNewSoftwareCreateTicket'
 before:
    -  type: 'http-request'
       method: 'get'
-      url: 'http://localhost:8081/api/v1/softwares'
+      url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/softwares`
       putOnContextAs: 'softwareResponse'
 components: 
    - type: 'dialog'

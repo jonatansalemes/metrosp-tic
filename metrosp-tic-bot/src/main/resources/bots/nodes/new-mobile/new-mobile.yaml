@@ -19,7 +19,8 @@ components:
                   required: true
                   placeholder: 'Digite um termo para pesquisar: Financeiro, Rh, Operações'
                   putOnContextAs: 'askForNewDeviceDepartment'
-                  url: 'http://localhost:8081/api/v1/departments'
+                  url: > 
+                           (js) -> return `${env.API_URL_BASE}/api/v1/departments`;
                   min: 3
                   debounce: 300
                   map: >
