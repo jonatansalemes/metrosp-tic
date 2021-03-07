@@ -16,7 +16,7 @@ before:
       putOnContextAs: 'machineDetailResponse'
 components:
    - type: 'text'
-     text: (js) -> return `Apesar de entender que seu problema pode estar ligado a ${context.problemClassification} ainda não possuimos um fluxo automatizado para esse tipo de problema`;
+     text: (js) -> return `Apesar de entender que seu problema possa estar ligado a ${context.problemClassification}, ainda não possuimos um fluxo automatizado para esse tipo de problema`;
      rendered: (js) -> return context.problemClassification !== 'install-software';
    - type: 'text'
      text: (js) -> 

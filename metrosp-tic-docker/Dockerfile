@@ -27,7 +27,7 @@ RUN git config --global http.sslVerify false
 RUN git clone --depth 1 --single-branch --branch feature-rc4 https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jslsolucoes/open-chatbot.git /opt/open-chatbot
 RUN rm -rf /opt/open-chatbot/app/.env*
 RUN npm install -g serve
-RUN printf "REACT_APP_URL_BASE=${BOT_URL}/api/v1\nREACT_APP_BOT_ID=bots\nREACT_APP_LOCALE=pt_br\n" > /opt/open-chatbot/app/.env
+RUN printf "REACT_APP_URL_BASE=${BOT_URL}/api/v1\nREACT_APP_BOT_ID=bots\nREACT_APP_LOCALE=pt_br\nREACT_APP_TITLE=Metro SP - Atendimento Virtual\n" > /opt/open-chatbot/app/.env
 RUN cd /opt/open-chatbot/app && npm install && npm run build
 
 #build engine
