@@ -8,11 +8,13 @@ components:
       title: 'Suporte MetroSP TIC'
       fields:
          -  type: 'form-field'
+            label: 'Descreva a situação a ser avaliada'
+            required: true
             components:
                -  type: 'textarea'
                   putOnContextAs: 'problemDescription'
                   placeholder: 'Digite o problema pelo qual voce está passando. Alguns exemplos são: Preciso instalar um software em meu computador; Meu monitor esta piscando muito; Meu computador não liga; Meu monitor não quer ligar, já tentei de varias maneiras; Tem uma lampada queimada na sala de reunioes;'
-                  value: |
+                  value: >
                      (js) => if(context.exists('problemDescription')) {
                                  return context.problemDescription;
                               } else {

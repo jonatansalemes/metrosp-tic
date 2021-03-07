@@ -3,7 +3,7 @@ type: 'node'
 components: 
    -  type: 'text'
       text: > 
-               (js) -> return `Deseja confirmar a solicitação de um novo dispositivo móvel para o setor "${context.askForNewDeviceDepartment.text}" com a justificativa "${context.askForNewDeviceReason}" ? Para confirmar a solicitação clique em "Próximo". Caso deseje rever os dados ou cancelar a solicitação basta clicar em "Anterior".`; 
+               (js) -> return `Deseja confirmar a solicitação de um novo celular ? Setor: "${context.askForNewDeviceDepartment.text}"; Justificativa "${context.askForNewDeviceReason}". Para confirmar a solicitação clique em "Próximo". Caso deseje rever os dados ou cancelar a solicitação basta clicar em "Anterior".`; 
 hasNext: true
 next: 'newMobileCreateOrder'
 hasPrevious: true

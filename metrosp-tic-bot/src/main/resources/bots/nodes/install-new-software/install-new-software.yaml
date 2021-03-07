@@ -2,6 +2,8 @@ id: 'installNewSoftware'
 type: 'node'
 hasNext: true
 next: 'installNewSoftwareCreateTicket'
+hasPrevious: true
+previous: 'newProblemClassify'
 before:
    -  type: 'http-request'
       method: 'get'
@@ -47,7 +49,11 @@ components:
                  putOnContextAs : 'createTicketSoftwareInstallHostname'
                  placeholder: 'Preencha o hostname'
                  value: > 
-                           (js) -> return context.machineDetailResponse.body.hostname;
+                           (js) -> if(context.confirmMachineDetails === 'YES') {
+                              return context.machineDetailResponse.body.hostname;
+                           } else {
+                              return '';
+                           }
          -  type: 'form-field'
             label: 'Ips'
             components:
@@ -56,9 +62,13 @@ components:
                  putOnContextAs : 'createTicketSoftwareInstallIps'
                  placeholder: 'Preencha o ip'
                  value: > 
-                           (js) -> return context.machineDetailResponse.body.interfaces.join(',');
+                          (js) -> if(context.confirmMachineDetails === 'YES') {
+                              return context.machineDetailResponse.body.interfaces.join(',');
+                           } else {
+                              return '';
+                           }
          -  type: 'form-field'
-            label: 'Confirme o nome completo (troque caso desejar)'
+            label: 'Confirme o nome completo'
             required: true
             components:
                - type : 'input'
@@ -67,9 +77,13 @@ components:
                  required: true
                  placeholder: 'Preencha seu nome completo'
                  value: > 
-                           (js) -> return context.machineDetailResponse.body.fullName;
+                           (js) -> if(context.confirmMachineDetails === 'YES') { 
+                              return context.machineDetailResponse.body.fullName;
+                           } else {
+                              return '';
+                           }
          -  type: 'form-field'
-            label: 'Confirme o telefone para contato (troque caso desejar)'
+            label: 'Confirme o telefone para contato'
             required: true
             components:
                - type : 'input'
@@ -78,9 +92,13 @@ components:
                  required: true
                  placeholder: 'Preencha seu telefone completo'
                  value: > 
-                           (js) -> return context.machineDetailResponse.body.phone;
+                           (js) -> if(context.confirmMachineDetails === 'YES') { 
+                              return context.machineDetailResponse.body.phone;
+                           } else {
+                              return '';
+                           }
          -  type: 'form-field'
-            label: 'Confirme o email para contato (troque caso desejar)'
+            label: 'Confirme o email para contato'
             required: true
             components:
                - type : 'input'
@@ -89,5 +107,9 @@ components:
                  required: true
                  placeholder: 'Preencha seu email completo'
                  value: > 
-                           (js) -> return context.machineDetailResponse.body.email; 
+                           (js) -> if(context.confirmMachineDetails === 'YES') { 
+                              return context.machineDetailResponse.body.email; 
+                           } else {
+                              return '';
+                           }
     

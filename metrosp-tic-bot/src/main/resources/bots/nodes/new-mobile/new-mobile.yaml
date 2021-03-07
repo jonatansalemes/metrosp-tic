@@ -5,19 +5,19 @@ components:
       duration: '1s'
       text: 'Gerando formulário'
    -  type: 'form'
-      title: 'Formulário de solicitação de dispositivo móvel'
+      title: 'Formulário de solicitação de celular'
       fields:
          -  type: 'form-field'
-            label: 'Escolha o departamento responsável'
+            label: 'Escolha o seu departamento (Financeiro, Rh ..)'
             required: true
             components:
                -  type: 'auto-complete'
                   text: >
-                              (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.text : '';
+                            (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.text : '';
                   value: >
-                              (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.value : '';
+                            (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.value : '';
                   required: true
-                  placeholder: 'Digite um termo para pesquisar: Financeiro, Rh, Operações'
+                  placeholder: 'Digite o nome do departamento'
                   putOnContextAs: 'askForNewDeviceDepartment'
                   url: > 
                            (js) -> return `${env.API_URL_BASE}/api/v1/departments`;
@@ -33,13 +33,13 @@ components:
                           });
                        }
          -  type: 'form-field'
-            label: 'Motive a sua solicitação para um novo dispositivo móvel'
+            label: 'Motive a sua solicitação para um novo celular'
             required: true
             components:
                - type : 'textarea'
                  putOnContextAs : 'askForNewDeviceReason'
                  required: true
-                 placeholder: 'Preencha o motivo pelo qual está solicitando um novo dispositivo móvel'
+                 placeholder: 'Preencha o motivo pelo qual está solicitando um novo celular'
                  value: > 
                            (js) -> if(context.exists('askForNewDeviceReason')) {
                               return context.askForNewDeviceReason;

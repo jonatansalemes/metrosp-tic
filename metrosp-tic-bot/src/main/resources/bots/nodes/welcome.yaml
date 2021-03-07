@@ -14,10 +14,10 @@ components:
             text: 'Por favor, escolha uma opção para iniciar o atendimento.'
             required: true
             buttons:
-            -  text: 'Queria solicitar um novo dispositivo móvel'
+            -  text: 'Gostaria de solicitar um novo celular'
                value: 'newMobile'
                type: 'button'
-            -  text: 'Gostaria de descrever um problema e que o robô me guie no processo de atendimento'
+            -  text: 'Gostaria de descrever um problema em que o robô me guie no processo de atendimento'
                value: 'newProblem'
                type: 'button'
             value: > 

@@ -11,7 +11,7 @@ before:
       onDisagree: 'metroSpTicNaiveBayesModel'
     - type: 'http-request'
       method: 'get'
-      url: >
+      url: >      
              (js) -> return `${env.API_URL_BASE}/api/v1/machines/8a18cbcf-ae06-4bf5-8f2b-e575b98fb87f`
       putOnContextAs: 'machineDetailResponse'
 components:
@@ -20,8 +20,27 @@ components:
      rendered: (js) -> return context.problemClassification !== 'install-software';
    - type: 'text'
      text: (js) -> 
-                 return `Olá ${context.machineDetailResponse.body.fullName} aparentemente você quer instalar um novo software em seu computador ${context.machineDetailResponse.body.hostname} (${context.machineDetailResponse.body.interfaces.join(',')}). Caso seja isso mesmo, basta prosseguir clicando em "Próximo". Caso deseje tentar descrever melhor seu problema clique em "Anterior" para voltar.`;
+                 return `Olá ${context.machineDetailResponse.body.fullName}, detectamos seu dispositivo e aparentemente você quer instalar um novo software em seu computador ${context.machineDetailResponse.body.hostname} (${context.machineDetailResponse.body.interfaces.join(',')}). Caso seja isso mesmo, basta prosseguir clicando em "Próximo". Caso deseje tentar descrever melhor seu problema clique em "Anterior" para voltar.`;
      rendered: (js) -> return context.problemClassification === 'install-software' && context.machineDetailResponse.statusCode === 200;
+   - type: 'button-group'
+     putOnContextAs: 'confirmMachineDetails'
+     text: 'Por favor, confirme os dados.'
+     required: true
+     buttons:
+      -  text: (js) -> return `Sim, sou ${context.machineDetailResponse.body.fullName} e desejo continuar com a solicitação`;
+         value: 'YES'
+         type: 'button'
+      -  text: (js) -> return `Não, não sou ${context.machineDetailResponse.body.fullName}, porém desejo continuar com a solicitação e preencher os dados restantes`;
+         value: 'NO'
+         type: 'button'
+     value: > 
+           (js) => if(context.exists('confirmMachineDetails')) {
+                     return context.confirmMachineDetails;
+                  } else {
+                     return 'YES';
+                  }                
+     rendered: >
+                 (js) -> return context.problemClassification === 'install-software' && context.machineDetailResponse.statusCode === 200;
    - type: 'dialog'
      of: 'error'
      text: > 
