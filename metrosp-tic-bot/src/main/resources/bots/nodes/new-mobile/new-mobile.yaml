@@ -1,5 +1,11 @@
 id: 'newMobile'
 type: 'node'
+before:
+   -  type: 'http-request'
+      method: 'get'
+      url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/departments`
+      putOnContextAs: 'departmentResponse'
 components: 
    -  type: 'typing'
       duration: '1s'
@@ -8,30 +14,26 @@ components:
       title: 'Formulário de solicitação de celular'
       fields:
          -  type: 'form-field'
-            label: 'Escolha o seu departamento (Financeiro, Rh ..)'
+            label: 'Escolha o departamento'
             required: true
             components:
-               -  type: 'auto-complete'
-                  text: >
-                            (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.text : '';
-                  value: >
-                            (js) -> return context.exists('askForNewDeviceDepartmentId') ? context.askForNewDeviceDepartmentId.value : '';
-                  required: true
-                  placeholder: 'Digite o nome do departamento'
-                  putOnContextAs: 'askForNewDeviceDepartment'
-                  url: > 
-                           (js) -> return `${env.API_URL_BASE}/api/v1/departments`;
-                  min: 3
-                  debounce: 300
-                  map: >
-                       (response) => {
-                          return response.map((department) => {
-                             return  {
-                                value: department.id,
-                                text: department.name
-                             }
+               - type : 'select'
+                 putOnContextAs : 'askForNewDeviceDepartment'
+                 required: true
+                 placeholder: 'Escolha o seu departamento'
+                 map: > 
+                          (js) -> return context.departmentResponse.body.map(department => {
+                                return {
+                                   value: department.id,
+                                   text: department.name
+                                };
                           });
-                       }
+                 value: > 
+                           (js) -> if(context.exists('askForNewDeviceDepartment')) {
+                                      return context.askForNewDeviceDepartment.value;
+                                   } else {
+                                      return '';
+                                   }
          -  type: 'form-field'
             label: 'Motive a sua solicitação para um novo celular'
             required: true

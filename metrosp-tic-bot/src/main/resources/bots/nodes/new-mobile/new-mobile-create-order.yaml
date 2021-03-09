@@ -14,4 +14,4 @@ before:
      putOnContextAs: 'newMobileTicketResponse'
 components: 
    -  type: 'text'
-      text: 'Solicitação de celular foi realizada com sucesso'
+      text: 'Sua solicitação de celular foi realizada com sucesso.'

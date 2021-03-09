@@ -10,7 +10,7 @@ before:
         - (js) -> return context.createTicketSoftwareInstallFullName;
         - (js) -> return context.createTicketSoftwareInstallPhone;
         - (js) -> return context.createTicketSoftwareInstallEmail;
-        - (js) -> return context.createTicketSoftwareInstallIdSoftwareVersion;
+        - (js) -> return context.createTicketSoftwareInstallSoftwareVersion.value;
         - (js) -> return context.createTicketSoftwareInstallHostname;
         - (js) -> return context.createTicketSoftwareInstallIps;
    - type: 'http-request'
@@ -24,7 +24,7 @@ before:
         fullName: (js) -> return context.createTicketSoftwareInstallFullName;
         phone: (js) => return context.createTicketSoftwareInstallPhone;
         email: (js) => return context.createTicketSoftwareInstallEmail;
-        idSoftwareVersion: (js) => return context.createTicketSoftwareInstallIdSoftwareVersion;
+        idSoftwareVersion: (js) => return context.createTicketSoftwareInstallSoftwareVersion.value;
         hostname: (js) => return context.createTicketSoftwareInstallHostname;
         ip: (js) => return context.createTicketSoftwareInstallIps;
      putOnContextAs: 'createNewTicketResponse'

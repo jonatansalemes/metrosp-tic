@@ -13,10 +13,13 @@ import com.jslsolucoes.metrosp.tic.api.domain.Department;
 @Repository
 public interface DepartmentRepo extends CrudRepository<Department, Long> {
 
-	@Query("select d from Department d where lower(d.name) like %:term%")
+	@Query("select d from Department d where lower(d.name) like %:term% order by d.name")
 	public List<Department> search(@Param("term") String term);
 	
 	@Query("select d from Department d where d.id = :idDepartament")
 	public Optional<Department> department(@Param("idDepartament") Long idDepartament);
+
+	@Query("select d from Department d order by d.name")
+	public List<Department> all();
 
 }

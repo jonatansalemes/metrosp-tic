@@ -1,5 +1,6 @@
 id: 'bots'
 version: 'v1'
+debug: true
 entrypoint: 'welcome'
 type: 'bot'
 nodes:
